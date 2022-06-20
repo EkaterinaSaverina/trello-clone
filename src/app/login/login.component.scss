@@ -1,0 +1,20 @@
+.registration,
+.registration-tabs,
+.registration-input,
+.registration-button {
+  width: 100%;
+}
+
+.registration {
+  margin: 70px auto 0;
+  min-width: 150px;
+  max-width: 500px;
+
+  &-input:first-child {
+    margin-top: 16px;
+  }
+
+  &-button {
+    padding: 10px;
+  }
+}
