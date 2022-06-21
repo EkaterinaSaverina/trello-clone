@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -8,11 +8,12 @@ import { Router } from '@angular/router';
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
-    styleUrls: ['./login.component.scss']
+    styleUrls: ['./login.component.scss'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoginComponent implements OnInit {
     isLogin = true;
-    formGroup: FormGroup = {} as FormGroup;
+    formGroup!: FormGroup;
     errorToShow!: string;
 
     constructor(
@@ -41,8 +42,8 @@ export class LoginComponent implements OnInit {
         this.initializeForm();
     }
 
-    isFieldEmpty(field: string): boolean {
-        return this.formGroup!.get(field).hasError('required');
+    isFieldEmpty(field: string): boolean | undefined {
+        return this.formGroup.get(field)?.hasError('required');
     }
 
     ngOnInit(): void {

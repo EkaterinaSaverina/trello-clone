@@ -4,9 +4,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 import { MaterialModule } from './material.module';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
-    declarations: [],
+    declarations: [HeaderComponent],
     imports: [
         CommonModule,
         MaterialModule,
@@ -15,6 +16,7 @@ import { MaterialModule } from './material.module';
         FormsModule,
         HttpClientModule,
         MaterialModule,
+        HeaderComponent,
     ]
 })
 export class SharedModule { }

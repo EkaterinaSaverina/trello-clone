@@ -11,10 +11,13 @@ import { StoreRouterConnectingModule } from '@ngrx/router-store';
 import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
     declarations: [
         AppComponent,
+        PageNotFoundComponent,
     ],
     imports: [
         BrowserModule,
@@ -25,7 +28,8 @@ import { AppComponent } from './app.component';
         provideFirestore(() => getFirestore()),
         StoreModule.forRoot({}, {}),
         EffectsModule.forRoot([]),
-        StoreRouterConnectingModule.forRoot()
+        StoreRouterConnectingModule.forRoot(),
+        SharedModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
