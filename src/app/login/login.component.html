@@ -1,0 +1,46 @@
+<div class="registration">
+  <mat-button-toggle-group class="registration-tabs">
+    <mat-button-toggle checked class="registration-tabs" (click)="changeForm(true)">
+      Sign In
+    </mat-button-toggle>
+    <mat-button-toggle class="registration-tabs" (click)="changeForm(false)">
+      Sign Up
+    </mat-button-toggle>
+  </mat-button-toggle-group>
+
+  <form [formGroup]="formGroup" (submit)="submitForm()">
+    <mat-form-field class="registration-input">
+      <mat-label>Please enter your email</mat-label>
+      <input matInput formControlName="email" />
+      <mat-error *ngIf="isFieldEmpty('email')">This Field Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="registration-input" *ngIf="!isLogin">
+      <mat-label>Please enter your name</mat-label>
+      <input matInput formControlName="name" />
+      <mat-error *ngIf="isFieldEmpty('name')">This Field Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="registration-input" *ngIf="!isLogin">
+      <mat-label>Please enter your surname</mat-label>
+      <input matInput formControlName="surname" />
+      <mat-error *ngIf="isFieldEmpty('surname')">This Field Required</mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="registration-input">
+      <mat-label>Please enter your password</mat-label>
+      <input matInput type="password" formControlName="password" />
+      <mat-error *ngIf="isFieldEmpty('password')">This Field Required</mat-error>
+    </mat-form-field>
+
+    <button *ngIf="isLogin" mat-raised-button color="primary" type="submit" class="registration-button"
+      [disabled]="formGroup.invalid">
+      Log In
+    </button>
+
+    <button *ngIf="!isLogin" mat-raised-button color="accent" type="submit" class="registration-button"
+      [disabled]="formGroup.invalid">
+      Register
+    </button>
+  </form>
+</div>
