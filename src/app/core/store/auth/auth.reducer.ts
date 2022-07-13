@@ -1,7 +1,7 @@
 import { Action, createReducer, on } from '@ngrx/store';
 
-import { User } from '../../models';
 import { login, updateUser, logout, logoutSuccess } from './auth.actions';
+import { User } from '@app/core/models';
 
 export const AUTH_FEATURE_KEY = 'auth';
 

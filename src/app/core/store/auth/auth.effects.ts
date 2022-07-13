@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-
 import { from } from 'rxjs';
 import { map, switchMap, exhaustMap } from 'rxjs/operators';
 
-import { AuthService } from '@app/core/service';
-import { Route } from '@app/core/models';
-
+import { AuthService } from '@app/core/services';
 import * as fromAuthActions from './auth.actions';
-import { User } from '../../models';
+import { User } from '@app/core/models';
 
 @Injectable()
 export class AuthEffects {
@@ -32,7 +28,7 @@ export class AuthEffects {
             switchMap(() =>
                 from(this.authService.login()).pipe(
                     switchMap(() => {
-                        this.router.navigate([Route.default]);
+                        this.router.navigate(['']);
 
                         return this.authService.user$;
                     }),
@@ -46,7 +42,7 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(fromAuthActions.logout),
             exhaustMap(() => from(this.authService.logout())),
-            exhaustMap(() => from(this.router.navigate([Route.login]))),
+            exhaustMap(() => from(this.router.navigate(['login']))),
             map(() => fromAuthActions.logoutSuccess())
         )
     );

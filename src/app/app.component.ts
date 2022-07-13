@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { Store } from '@ngrx/store';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { SpinnerService } from './core/services/spinner.service';
+import { SpinnerService } from './core/services';
 import { AppState } from './core/store/app.state';
-import { initApp } from './core/store/auth';
+import { initApp, selectAuthenticatedUser } from './core/store/auth';
+import { User } from './core/models';
 
 @Component({
     selector: 'app-root',
@@ -14,6 +15,7 @@ import { initApp } from './core/store/auth';
 export class AppComponent {
     title = 'trello-clone';
     showSpinner$: Observable<boolean>;
+    user$!: Observable<User | undefined>;
 
     constructor(
         private spinner: SpinnerService,
@@ -21,5 +23,6 @@ export class AppComponent {
     ) {
         this.showSpinner$ = spinner.getValue();
         this.store$.dispatch(initApp());
+        this.user$ = this.store$.pipe(select(selectAuthenticatedUser));
     }
 }
