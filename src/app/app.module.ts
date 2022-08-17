@@ -32,16 +32,16 @@ import { AuthModule } from './core/store/auth/auth.module';
         provideAuth(() => getAuth()),
         provideFirestore(() => getFirestore()),
         AuthModule,
-        StoreRouterConnectingModule.forRoot({
-            serializer: CustomSerializer,
-            navigationActionTiming: NavigationActionTiming.PostActivation,
-            routerState: RouterState.Minimal,
-        }),
         StoreModule.forRoot({
             [ROUTER_FEATURE_KEY]: routerReducer,
             [AUTH_FEATURE_KEY]: authReducer,
         },
             {}),
+        StoreRouterConnectingModule.forRoot({
+            serializer: CustomSerializer,
+            navigationActionTiming: NavigationActionTiming.PostActivation,
+            routerState: RouterState.Minimal,
+        }),
         EffectsModule.forRoot([]),
         SharedModule,
     ],

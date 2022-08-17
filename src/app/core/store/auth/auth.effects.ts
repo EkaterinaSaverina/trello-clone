@@ -26,7 +26,7 @@ export class AuthEffects {
         this.actions$.pipe(
             ofType(fromAuthActions.login),
             switchMap(() =>
-                from(this.authService.login()).pipe(
+                from(this.authService.login(email, password)).pipe(
                     switchMap(() => {
                         this.router.navigate(['']);
 

@@ -6,7 +6,7 @@ import { tap, filter, map, takeUntil, distinctUntilChanged } from 'rxjs/operator
 import firebase from 'firebase/compat/app';
 
 import { DocumentInfo, User } from '../models';
-import { DatabaseService } from './database.service';
+import { AuthSubscriptionService, DatabaseService } from '.';
 
 @Injectable({
     providedIn: 'root',
@@ -14,9 +14,12 @@ import { DatabaseService } from './database.service';
 export class AuthService {
     private userSubject$ = new BehaviorSubject<User>({} as User);
     private logOutSubject$ = new Subject<void>();
-    private unsubscribe!: firebase.Unsubscribe;
+    // private unsubscribe!: firebase.Unsubscribe;
 
-    constructor(private db: DatabaseService) { }
+    constructor(
+        private db: DatabaseService,
+        private authSubscriptionService: AuthSubscriptionService
+    ) { }
 
     get user$(): Observable<User> {
         return this.userSubject$.asObservable().pipe(distinctUntilChanged());
@@ -30,12 +33,12 @@ export class AuthService {
         await this.db.register(email, password);
     }
 
-    async login(): Promise<void> {
-        await this.db.login();
+    async login(email: string, password: string): Promise<void> {
+        await this.db.login(email, password);
 
-        // if (!this.unsubscribe) {
-        //     this.checkAuthState();
-        // }
+        if (!this.authSubscriptionService.unsubscribe$) {
+            this.checkAuthState();
+        }
     }
 
     async logout(): Promise<void> {
@@ -55,6 +58,20 @@ export class AuthService {
             }
         });
     }
+
+    // private getAuthState() {
+    //     return this.afAuth.authState
+    //         .pipe(
+    //             takeUntil(this.authSubscriptionService.unsubscribe$)
+    //         );
+    // }
+
+    // private getUser(userId: string): Observable<User> {
+    //     return of(this.authUserService.getCurrentUser())
+    //         .pipe(
+    //             takeUntil(this.authSubscriptionService.unsubscribe$)
+    //         );
+    // }
 
     private createUser(authUser: firebase.User): Promise<void> {
         return this.db.setDocument(`users/${authUser.uid}`, new User(authUser) as Record<string, any>);

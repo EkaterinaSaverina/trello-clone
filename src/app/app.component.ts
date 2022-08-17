@@ -21,7 +21,8 @@ export class AppComponent {
         private spinner: SpinnerService,
         private store$: Store<AppState>
     ) {
-        this.showSpinner$ = spinner.getValue();
+        this.showSpinner$ = this.spinner.getValue();
+        debugger;
         this.store$.dispatch(initApp());
         this.user$ = this.store$.pipe(select(selectAuthenticatedUser));
     }

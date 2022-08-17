@@ -21,8 +21,8 @@ export class DatabaseService {
         return await this.firebaseAuth.createUserWithEmailAndPassword(email, password);
     }
 
-    login(): Promise<firebase.auth.UserCredential> {
-        return this.firebaseAuth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+    login(email: string, password: string): Promise<firebase.auth.UserCredential> {
+        return this.firebaseAuth.signInWithEmailAndPassword(email, password);
     }
 
     logout(): Promise<void> {
