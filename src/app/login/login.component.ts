@@ -2,8 +2,8 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { AuthService } from '@app/core/services';
 // import { AuthService, NotificationsService } from '../core/services';
-// import { User } from '../core/models';
 
 @Component({
     selector: 'app-login',
@@ -17,7 +17,7 @@ export class LoginComponent implements OnInit {
     errorToShow!: string;
 
     constructor(
-        // private authService: AuthService,
+        private authService: AuthService,
         private router: Router,
         // private notificationsService: NotificationsService,
     ) { }
@@ -63,14 +63,12 @@ export class LoginComponent implements OnInit {
     }
 
     private async login(): Promise<void> {
-        const data = this.formGroup.value;
-
-        // await this.authService.login(data as User);
+        const { email, password } = this.formGroup.value;
+        await this.authService.login(email, password);
     }
 
     private async register(): Promise<void> {
-        const data = this.formGroup.value;
-
-        // await this.authService.register(data as User);
+        const { email, password } = this.formGroup.value;
+        await this.authService.register(email, password);
     }
 }
